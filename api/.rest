@@ -1,0 +1,162 @@
+###CREATE_USER
+POST  http://localhost:5000/api/user/register
+Content-Type: application/json
+
+{
+    "firstName": "linh",
+    "lastName": "dinh",
+    "email": "dinhlinh@gmail.com",
+    "password": "A@123456"
+}
+
+###LOGIN
+POST  http://localhost:5000/api/user/login
+Content-Type: application/json
+
+{
+    "email": "dinhlinh@gmail.com",
+    "password": "A@123456"
+}
+
+###UPDATE_PROFILE
+PUT  http://localhost:5000/api/user/update
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+Content-Type: application/json
+
+{
+    "firstName": "dinhh",
+    "lastName": "linh"
+}
+
+###CHANGE_PASSWORD
+PUT  http://localhost:5000/api/user/changePassword
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+Content-Type: application/json
+
+{
+    "oldPassword":"A.123456",
+    "newPassword":"A@123456"
+}
+###LOGOUT
+POST  http://localhost:5000/api/user/logout
+
+### CREATE CATEGORY
+POST  http://localhost:5000/api/category/create
+Content-Type: application/json
+
+{
+    "category": "Shirt",
+    "image": "test"
+}
+
+### GET CATEGORY
+GET  http://localhost:5000/api/category/getAllCategories
+
+### CREATE PRODUCT
+POST  http://localhost:5000/api/product/create
+Content-Type: application/json
+
+{
+    "title": "áo dài tay nam",
+    "image": ["test", "test2"],
+    "category": "ab98cf64-297b-47b8-9bf7-2929f22d436f",
+    "gender": "male",
+    "desc": "test",
+    "price": "3",
+    "quantity": "1000",
+    "size": ["S","M","XL","XXL"]
+}
+
+### GET PRODUCT
+GET  http://localhost:5000/api/product/getSomeProducts?title=áo
+
+### GET ALL PRODUCT
+GET  http://localhost:5000/api/product/getProducts
+
+### GET ONE PRODUCT
+GET  http://localhost:5000/api/product/13aa382d-2ef0-448e-8797-146c33e49e06
+
+### Add Item to Cart 13aa382d-2ef0-448e-8797-146c33e49e06
+POST http://localhost:5000/api/cart/addItem
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+Content-Type: application/json
+
+{
+    "productId": "13aa382d-2ef0-448e-8797-146c33e49e06"
+}
+
+### Get user's item
+GET http://localhost:5000/api/cart/myCart
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+
+### update cart item
+PUT http://localhost:5000/api/cart/updateMyCart/cc450a41-378a-416f-9ce1-51fb54e7b166
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+Content-Type: application/json
+
+{
+    "quantity": 5
+}
+
+### add my address
+POST http://localhost:5000/api/info/newAddress
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+Content-Type: application/json
+
+{
+    "address": "thanh xuan, ha noi",
+    "phone": "0312546597"
+}
+
+### get my address
+GET http://localhost:5000/api/info/myAddress
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+
+### create payment type
+POST http://localhost:5000/api/paymentType/createPayType
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+Content-Type: application/json
+
+{
+    "paymentType": "COD"
+}
+
+### get payment type
+GET http://localhost:5000/api/paymentType/PayType
+
+###Payment
+GET http://localhost:5000/api/payment
+
+### add payType&address to order
+POST http://localhost:5000/api/order/createOrder
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+Content-Type: application/json
+
+{
+    "AddressId": "d3daa460-6f82-4478-9539-86f0d39306fa",
+    "PaymentId": "437c6bd6-4ac0-48cb-8632-72487fe36862"
+}
+
+###e13a1473-cc69-422a-a401-4bc5ac627b6c
+POST http://localhost:5000/api/order/addItemOrder
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
+Content-Type: application/json
+
+{
+    "OrdersId": "dfbe8f44-785d-4cab-8284-6789b0431939",
+    "ProductId": "13aa382d-2ef0-448e-8797-146c33e49e06", 
+    "quantity": 1, 
+    "size": "XL"
+}
+
+###
+GET http://localhost:5000/api/payment
+
+###
+POST http://localhost:5000/api/order/pay/dfbe8f44-785d-4cab-8284-6789b0431939
+
+###
+POST http://localhost:5000/api/order/update/dfbe8f44-785d-4cab-8284-6789b0431939
+
+###
+GET http://localhost:5000/api/order/income
