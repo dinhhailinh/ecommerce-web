@@ -211,6 +211,32 @@ const getOrders = async (req, res) => {
     })
     res.status(orders)
 }
+
+const getOrderDetail = async (req, res) => {
+    try {
+        const orderDetail = await OrderDetails.findOne({
+            where: {OrderId: req.params.id},
+            include: { model: Products, as: 'products', attributes: ['productImage, title', 'price']},
+            attributes: ['quantity', 'sum']
+        })
+        res.status(200).json(orderDetail)
+    } catch (error) {
+        
+    }
+}
+
+const getYourOrderDetail = async (req, res) => {
+    try {
+        const orderDetail = await OrderDetails.findOne({
+            where: {OrderId: req.params.id, UserId: req.user.id},
+            include: { model: Products, as: 'products', attributes: ['productImage, title', 'price']},
+            attributes: ['quantity', 'sum']
+        })
+        res.status(200).json(orderDetail)
+    } catch (error) {
+        
+    }
+}
 const deletedOrder = async (req, res) => {
     const deleteOrder = await Orders.findOne({
         where: {
@@ -221,4 +247,4 @@ const deletedOrder = async (req, res) => {
     await deleteOrder.destroy()
     res.status(200).json('deleted!')
 }
-module.exports = {createOrder, createOrderItem, updateOrderToPaid, updateOrderToDelivery, getOrdersIncome, getOrders, deletedOrder}
+module.exports = {createOrder, createOrderItem, updateOrderToPaid, updateOrderToDelivery, getOrdersIncome, getOrders, deletedOrder, getOrderDetail, getYourOrderDetail}

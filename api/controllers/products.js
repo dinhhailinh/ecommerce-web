@@ -34,7 +34,7 @@ const createProduct = async (req, res) =>{
     }
 }
 
-const getAllProduct = async (req, res) =>{
+/*const getAllProduct = async (req, res) =>{
     const limit = Number(req.query.limit) || 20
     const pageNum = Number(req.query.pageNum) || 1
     const page = limit * (pageNum - 1)
@@ -58,20 +58,23 @@ const getAllProduct = async (req, res) =>{
     } catch (error) {
         console.log(error);
     }
-}
+}*/
 
-const getSomeProducts = async (req, res) => {
+const getProducts = async (req, res) => {
     const limit = Number(req.query.limit) || 20
     const pageNum = Number(req.query.pageNum) || 1
     const page = limit * (pageNum - 1)
 
-    const {title, gender, CategoryId, sold, min, max, price} = req.query
+    const {title, gender, CategoryId, sold, min, max, price, newest} = req.query
     const orderItem = []
     if (sold) {
         orderItem.push(['sold', sold])
     }
     if (price) {
         orderItem.push(['price', price])
+    }
+    if (newest) {
+        orderItem.push(['createdAt', newest])
     }
     async function getConditions(req){
         const filter = {}
@@ -111,9 +114,7 @@ const getSomeProducts = async (req, res) => {
             limit: limit,
             offset: page,
         })
-        res.status(201).json({
-            getProducts
-        })
+        res.status(201).json(getProducts)
     } catch (error) {
         console.log(error)
     }
@@ -158,4 +159,4 @@ const deleteProduct = async (req, res) => {
     }
 }
 
-module.exports = {createProduct, getAllProduct, getSomeProducts, getOneProduct, updateProduct, deleteProduct}
+module.exports = {createProduct, getProducts, getOneProduct, updateProduct, deleteProduct}

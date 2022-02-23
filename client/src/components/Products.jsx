@@ -12,8 +12,8 @@ const Container = styled.div`
 const Products = () => {
     return (
       <Container>
-        {popularProducts.map((item) => (
-          <Product item={item} key={item.id} />
+        {popularProducts.map((product) => (
+          <Product item={product} key={product.id} />
         ))}
       </Container>
     )

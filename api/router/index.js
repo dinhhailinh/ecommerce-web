@@ -9,6 +9,7 @@ const address = require ('./address')
 const paymentType = require ('./paymentType')
 const payment = require ('./payment')
 const order = require ('./order')
+const upload = require ('./upload')
 env.config()
 
 Router.use('/user', user)
@@ -19,5 +20,5 @@ Router.use('/product', product)
 Router.use('/cart', cartItem)
 Router.use('/order', order)
 Router.use('/payment', payment)
-
+Router.use('/uploads', upload)
 module.exports = Router
