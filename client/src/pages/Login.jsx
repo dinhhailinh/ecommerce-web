@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 import {mobile} from '../responsive'
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { login } from './../actions/userActions';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100vw;
@@ -36,6 +41,7 @@ const Form = styled.form`
 
 const Input = styled.input`
   flex: 1;
+  font-size: 16px;
   min-width: 40%;
   margin: 10px 0;
   padding: 10px;
@@ -57,16 +63,42 @@ const Links = styled.a`
   text-decoration: underline;
   cursor: pointer;
 `
-
+const Error = styled.span`
+  margin: 5px auto;
+  font-size: 12px;
+  color: red;
+`
 const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const userLogin = useSelector((state) => (state.userLogin))
+  const { error, userInfo } = userLogin
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(login(email, password))
+  }
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/')
+    }
+  }, [userInfo, navigate])
   return (
     <Container>
       <Wrapper>
         <Title>LOGIN</Title>
-        <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>LOGIN</Button>
+        <Form onSubmit={submitHandler}>
+          <Input placeholder="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} />
+          <Input 
+            type="password"
+            placeholder="password" value={password}
+            onChange={(e) => setPassword(e.target.value)} />
+          <Button type='submit'>LOGIN</Button>
+          {error&&<Error>Email or password incorrect!</Error>}
           <Links>DO NOT YOU REMEMBER THE PASSWORD?</Links>
           <Link to = '/register'
           style={

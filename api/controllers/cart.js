@@ -1,13 +1,15 @@
 const { Carts, Products } = require('../models')
 
 const createCart = async (req, res) =>{
-    const {productId} = req.body
+    const {productId, color, size} = req.body
     try {
         
         const checkItem = await Carts.findOne({where: 
             {
                 UserId: req.user.id,
-                ProductId: productId
+                ProductId: productId,
+                color: color,
+                size: size
             },
             attributes: ['quantity']
         })
@@ -23,7 +25,9 @@ const createCart = async (req, res) =>{
         else {
             const newCart = await Carts.create({
                 UserId: req.user.id,
-                ProductId: productId
+                ProductId: productId,
+                color: color,
+                size: size
             })
             res.status(201).json(newCart)
         }
@@ -39,7 +43,7 @@ const getUserCart = async (req, res) =>{
             UserId: req.user.id
         },
         include: { model: Products, as: 'products', attributes: ['id', 'productImage', 'title', 'price'] },
-        attributes: ['id', 'quantity']
+        attributes: ['id', 'quantity', 'color', 'size']
     })
         res.status(200).json({myCart});
     } catch (error) {

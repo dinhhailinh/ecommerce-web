@@ -1,6 +1,11 @@
 import styled from 'styled-components'
+
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { mobile } from '../responsive'
 
+import { register } from './../actions/userActions';
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -53,24 +58,61 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 `
-
+const Error = styled.span`
+  margin: 5px auto;
+  font-size: 12px;
+  color: red;
+`
 const Register = () => {
+  const [email, setEmail] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const userRegister = useSelector((state) => (state.userRegister))
+  const { error, userInfo } = userRegister
+  //console.log({firstName, lastName, email, password})
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(register(firstName, lastName, email, password))
+  }
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/')
+    }
+  }, [userInfo, navigate])
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+        <Form onSubmit={submitHandler}>
+          <Input placeholder="first name" 
+          type="text"
+          value={firstName} 
+          onChange={(e) => setFirstName(e.target.value)} />
+
+          <Input placeholder="last name" 
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)} />
+
+          <Input placeholder="email" 
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} />
+
+          <Input placeholder="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} />  
+          <Input placeholder="confirm password" type="password"/>
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          {error&&<Error>{error}</Error>}
+          <Button type='submit'>CREATE</Button>
         </Form>
       </Wrapper>
     </Container>

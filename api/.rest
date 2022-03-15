@@ -3,9 +3,9 @@ POST  http://localhost:5000/api/user/register
 Content-Type: application/json
 
 {
-    "firstName": "linh",
-    "lastName": "dinh",
-    "email": "dinhlinh@gmail.com",
+    "firstName": "test",
+    "lastName": "name",
+    "email": "dinhhailinhtc@gmail.com",
     "password": "A@123456"
 }
 
@@ -53,6 +53,9 @@ Content-Type: application/json
 ### GET CATEGORY
 GET  http://localhost:5000/api/category
 
+### GET ONE CATEGORY
+GET  http://localhost:5000/api/category/T-shirt
+
 ### CREATE PRODUCT
 POST  http://localhost:5000/api/product/create
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTg3NmJjLTMzYzQtNGQzZC1hMTdjLThlZDRkZTdkM2ZkYSIsImVtYWlsIjoiZGluaGxpbmhAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQ1MDA5MDc5LCJleHAiOjE2NDY3MzcwNzl9.tfnLuuTIGYYu6OpGHBBCpxPtycBSBDKq05RIysxl55A
@@ -70,7 +73,7 @@ Content-Type: application/json
 }
 
 ### GET PRODUCT
-GET  http://localhost:5000/api/product/?CategoryId=ab98cf64-297b-47b8-9bf7-2929f22d436f
+GET  http://localhost:5000/api/product?gender=female&&max=2
 
 ### GET ALL PRODUCT
 GET  http://localhost:5000/api/product

@@ -6,13 +6,13 @@ const Product = Products
 const Op = Sequelize.Op
 
 const createProduct = async (req, res) =>{
-    const {title, image, desc, price, quantity, size, gender, category} = req.body
+    const {title, image, desc, price, quantity, size, gender, color, category} = req.body
     try {
         const check = await Product.findAll({where:{
             title: title
         }})
         if(check[0]) {
-            res.status(401).json("This Product has been existed")
+            res.status(400).json("This Product has been existed")
         }
         else{
             const newProduct = await Product.create({
@@ -23,14 +23,15 @@ const createProduct = async (req, res) =>{
                 CategoryId: category,
                 price: price,
                 quantity: quantity,
-                size: size
+                size: size,
+                color: color
             })
             res.status(201).json({
                 newProduct
             })
         }
     } catch (error) {
-        console.log(error);
+        res.status(400).json(error)
     }
 }
 
@@ -66,6 +67,7 @@ const getProducts = async (req, res) => {
     const page = limit * (pageNum - 1)
 
     const {title, gender, CategoryId, sold, min, max, price, newest} = req.query
+    const q = {title, gender, CategoryId, sold, min, max, price, newest}
     const orderItem = []
     if (sold) {
         orderItem.push(['sold', sold])
@@ -76,47 +78,48 @@ const getProducts = async (req, res) => {
     if (newest) {
         orderItem.push(['createdAt', newest])
     }
-    async function getConditions(req){
-        const filter = {}
-        if(title){
-            filter.title = {
-                [Op.like]: '%' + title + '%'
-            }
-        }
-        if (CategoryId){
-            filter.CategoryId = CategoryId
-        }
-        if (gender){
-            filter.gender = gender
-        }
-        if (min){
-            filter.price = {
-                [Op.gte]: min
-            }
-        }
-        if (max){
-            filter.price = {
-                [Op.lte]: max
-            }
-        }
-        if (min && max) {
-            filter.price = {
-                [Op.between]: [min, max]
-            }
-        }
-        return filter;
-    }
 
     try {
+        const condition = function getConditions(q){
+            const filter = {}
+            if(title){
+                filter.title = {
+                    [Op.like]: '%' + title + '%'
+                }
+            }
+            if (CategoryId){
+                filter.CategoryId = CategoryId
+            }
+            if (gender){
+                filter.gender = gender
+            }
+            if (min){
+                filter.price = {
+                    [Op.gte]: min
+                }
+            }
+            if (max){
+                filter.price = {
+                    [Op.lte]: max
+                }
+            }
+            if (min && max) {
+                filter.price = {
+                    [Op.between]: [min, max]
+                }
+            }
+            return filter;
+        }
         const getProducts = await Product.findAll({
             order: orderItem,
-            where: getConditions(req),
+            where: condition(q),
             limit: limit,
             offset: page,
         })
+        //console.log(condition(q));
         res.status(201).json(getProducts)
     } catch (error) {
-        console.log(error)
+        res.status(400).json(error)
     }
 }
 
@@ -125,11 +128,11 @@ const getOneProduct = async (req, res) => {
         const getOneProduct = await Product.findOne({
             where : {id: req.params.id},
             include: { model: Categories, as: 'category', attributes: ['cateName'] },
-            attributes: ['id', 'title', 'productImage', 'price', 'sold', 'size', 'desc', 'gender', 'quantity']
+            attributes: ['id', 'title', 'productImage', 'price', 'sold', 'size', 'desc', 'gender', 'quantity', 'color']
         })
         res.status(200).json(getOneProduct)
     } catch (error) {
-        console.log(error)
+        res.status(400).json(error)
     }
 }
 
@@ -143,7 +146,7 @@ const updateProduct = async (req, res) => {
         await update.save()
         res.status(200).json(update) 
     } catch (error) {
-        res.status(500).json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -155,7 +158,7 @@ const deleteProduct = async (req, res) => {
         await find.destroy()
         res.status(200).json('deleted !') 
     } catch (error) {
-        res.status(500).json(error)
+        res.status(400).json(error)
     }
 }
 

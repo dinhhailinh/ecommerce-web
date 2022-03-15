@@ -12,8 +12,11 @@ exports.validateRegisterRequest = [
     .withMessage('Valid Email is required'),
     check('password')
     .isLength({ min: 6 , max: 20})
-    .matches(/[a-zA-Z]+\W+/g)
-    .withMessage('Password min 6 character and include [a-zA-Z]+\W+')
+    .withMessage('Password min 6 character')
+    .matches(/[a-zA-Z]+/g)
+    .withMessage('Password must be include [a-zA-Z]+')
+    .matches(/\W+/g)
+    .withMessage('Password must be include \W+')
 ];
 
 exports.validateLoginRequest = [
@@ -22,8 +25,11 @@ exports.validateLoginRequest = [
     .withMessage('Valid Email is required'),
     check('password')
     .isLength({ min: 6 , max: 20})
-    .matches(/[a-zA-Z]+\W+/g)
-    .withMessage('Password min 6 character and include [a-zA-Z]+\W+')
+    .withMessage('Password min 6 character')
+    .matches(/[a-zA-Z]+/g)
+    .withMessage('Password must be include [a-zA-Z]+')
+    .matches(/\W+/g)
+    .withMessage('Password must be include \W+')
 ];
 
 exports.isRequestValidated = (req, res, next) => {

@@ -28,6 +28,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 1
       },
+      size: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      color: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

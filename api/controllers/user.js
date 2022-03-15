@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
             })
             
         if(checkUser) {
-            res.status(501).json("account has been existed, please try again")
+            res.status(400).json("account has been existed, please try again")
         }
         else {
             const newUser = await User.create({
@@ -40,8 +40,7 @@ const createUser = async (req, res) => {
             })
         }
     } catch (error) {
-        res.status(501).json(error)
-        console.log(error)
+        res.status(400).json(error)
     }
 }
 
@@ -49,9 +48,9 @@ const loginUser = async (req, res) => {
     const {email, password} = req.body
     try {
         const user = await User.findOne({
-                where:{
-                    email: email
-                }
+            where:{
+                email: email
+            }
         })
         if(user[0]) {res.status(401).json("Wrong email")}
         else{
@@ -61,7 +60,7 @@ const loginUser = async (req, res) => {
             )
             const originalPassword = hashedPassword.toString(cryptoJs.enc.Utf8)
             if (originalPassword != password) {
-                res.status(401).json("Wrong Password")
+                res.status(400).json("Wrong Password")
             }
             res.status(201).json({
                 id: user.id,
@@ -73,8 +72,7 @@ const loginUser = async (req, res) => {
             })
         }
     } catch (error) {
-        res.status(500).json(error)
-        console.log(error)
+        res.status(400).json(error)
     }
 }
 
@@ -96,7 +94,7 @@ const getAllUser = async (req, res) => {
         })
         res.status.json(users)
     } catch (error) {
-        
+        res.status(400).json(error)
     }
 }
 const getUser = async (req, res) => {
@@ -111,8 +109,7 @@ const getUser = async (req, res) => {
             avatar: user.avatar
         })
     } catch (error) {
-        res.status(500).json(error)
-        console.log(error);
+        res.status(400).json(error)
     }
 }
 
@@ -129,7 +126,7 @@ const updateProfile = async (req, res) => {
         await updateUser.save()
         res.status(201).json(updateUser)
     } catch (error) {
-        res.status(501).json(error)
+        res.status(400).json(error)
     }
     
 }
@@ -160,7 +157,7 @@ const changePassword = async (req, res) => {
             res.status(201).json('password has been changed!')
         }
     } catch (error) {
-        
+        res.status(400).json(error)
     }
 }
 
@@ -172,7 +169,7 @@ const deleteUser = async (req, res) => {
         await destroy.destroy()
         res.status(200).json('deleted!')
     } catch (error) {
-        
+        res.status(400).json(error)
     }
 }
 

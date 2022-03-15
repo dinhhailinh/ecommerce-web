@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.DECIMAL,
     quantity: DataTypes.INTEGER,
     size: DataTypes.ARRAY(DataTypes.STRING),
+    color: DataTypes.ARRAY(DataTypes.STRING),
     sold: DataTypes.INTEGER
   }, {
     sequelize,

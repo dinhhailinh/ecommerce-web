@@ -19,7 +19,7 @@ const createPaymentType = async (req, res) =>{
         }
         
     } catch (error) {
-        console.log(error);
+        res.status(400).json(error);
     }
 }
 
@@ -32,7 +32,7 @@ const getPaymentType = async (req, res) =>{
             getPaymentType
         })
     } catch (error) {
-        console.log(error);
+        res.status(400).json(error)
     }
 }
 module.exports = {createPaymentType, getPaymentType}

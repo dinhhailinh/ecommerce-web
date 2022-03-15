@@ -13,13 +13,13 @@ const createOrder = async (req, res) => {
         })
         res.status(200).json(order)
     } catch (error) {
-        res.status(501).json(error)
+        res.status(400).json(error)
         console.log(error);
     }
 }
 
 const createOrderItem = async (req, res) => {
-    const {ProductId, quantity, size, OrdersId} = req.body
+    const {ProductId, quantity, size, OrdersId, color} = req.body
     try {
         const findProduct = await Products.findOne({where: 
             {
@@ -31,7 +31,8 @@ const createOrderItem = async (req, res) => {
             where: {
                 UserId: req.user.id,
                 OrdersId: OrdersId,
-                ProductId: ProductId
+                ProductId: ProductId,
+                color: color
             },
             attributes: ['id','quantity']
         })
@@ -50,6 +51,7 @@ const createOrderItem = async (req, res) => {
                 ProductId: ProductId, 
                 quantity: quantity, 
                 size: size,
+                color: color,
                 sum: sum
             })
             res.status(200).json(detail)
@@ -81,7 +83,7 @@ const createOrderItem = async (req, res) => {
             await updateProduct.save()
         }
     } catch (error) {
-        res.status(501).json(error)
+        res.status(400).json(error)
     }
 }
 const updateOrderToPaid = async (req, res) => {
@@ -97,8 +99,7 @@ const updateOrderToPaid = async (req, res) => {
         await updateOrder.save();
         res.status(200).json('Payment success')
     } catch (error) {
-        res.status(501).json(error)
-        console.log(error);
+        res.status(400).json(error)
     }
 }
 const updateOrderToDelivery = async (req, res) => {
@@ -125,8 +126,7 @@ const updateOrderToDelivery = async (req, res) => {
         }
         res.status(200).json(findOrder)
     } catch (error) {
-        res.status(501).json(error)
-        console.log(error);
+        res.status(400).json(error)
     }
 }
 
@@ -187,8 +187,7 @@ const getOrdersIncome = async (req, res) => {
         }
         res.status(200).json(result)
     } catch (error) {
-        res.status(501).json(error)
-        console.log(error);
+        res.status(400).json(error)
     }
 }
 
@@ -217,7 +216,7 @@ const getOrderDetail = async (req, res) => {
         const orderDetail = await OrderDetails.findOne({
             where: {OrderId: req.params.id},
             include: { model: Products, as: 'products', attributes: ['productImage, title', 'price']},
-            attributes: ['quantity', 'sum']
+            attributes: ['quantity', 'sum', 'color']
         })
         res.status(200).json(orderDetail)
     } catch (error) {
@@ -230,7 +229,7 @@ const getYourOrderDetail = async (req, res) => {
         const orderDetail = await OrderDetails.findOne({
             where: {OrderId: req.params.id, UserId: req.user.id},
             include: { model: Products, as: 'products', attributes: ['productImage, title', 'price']},
-            attributes: ['quantity', 'sum']
+            attributes: ['quantity', 'sum', 'color']
         })
         res.status(200).json(orderDetail)
     } catch (error) {

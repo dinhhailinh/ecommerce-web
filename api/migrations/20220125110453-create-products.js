@@ -43,6 +43,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
+      color: {
+        allowNull: false,
+        type: Sequelize.ARRAY(Sequelize.STRING)
+      },
       sold: {
         allowNull: false,
         type: Sequelize.INTEGER,

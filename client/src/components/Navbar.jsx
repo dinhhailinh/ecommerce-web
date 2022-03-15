@@ -3,8 +3,11 @@ import { Badge, Select } from '@material-ui/core'
 import { Search, ShoppingCartOutlined } from '@material-ui/icons'
 import styled from 'styled-components'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../actions/userActions';
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   height: 60px;
@@ -71,9 +74,16 @@ const MenuItem = styled.div`
 `
 const Navbar = () => {
   const [language, setLanguage] = React.useState(0)
-
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const userLogin = useSelector((state) => (state.userLogin))
+  const { userInfo } = userLogin
   const handleChange = (event) => {
     setLanguage(event.target.value)
+  }
+  const logoutHandler = () => {
+    dispatch(logout())
+    navigate('/')
   }
   return (
     <Container>
@@ -123,25 +133,21 @@ const Navbar = () => {
           </Link>
         </Center> 
         <Right>
-        <Link to='/login' 
-          style={
-              { 
+        {userInfo?<MenuItem onClick={logoutHandler}>LOGOUT</MenuItem>:
+        <><Link to='/login'
+              style={{
                 color: 'inherit',
                 textDecoration: 'none'
-              }
-            }>
-          <MenuItem> LOGIN </MenuItem> 
+              }}>
+              <MenuItem> LOGIN </MenuItem>
 
-        </Link>
-        <Link to = '/register'
-          style={
-              { 
+            </Link><Link to='/register'
+              style={{
                 color: 'inherit',
                 textDecoration: 'none'
-              }
-            }>
-          <MenuItem> REGISTER </MenuItem>
-        </Link>
+              }}>
+                <MenuItem> REGISTER </MenuItem>
+              </Link></>}
           <Link to='/cart'
             style={
               { 

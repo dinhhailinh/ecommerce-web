@@ -31,6 +31,8 @@ const Info = styled.div`
 const Title = styled.h1`
     color:white;
     margin-bottom: 20px;
+    border: solid 3px;
+    border-image: linear-gradient(45deg, turquoise, greenyellow) 1; 
 `
 
 const Button = styled.button`
@@ -42,13 +44,13 @@ const Button = styled.button`
     font-weight: 600;
 `
 
-const CategoryItem = ({ item }) => {
+const CategoryItem = ({ cate }) => {
   return (
     <Container>
-      <Image src={item.cateImage} />
+      <Image src={cate.cateImage} />
       <Info>
-        <Title>{item.cateName}</Title>
-        <Link to = {`product?CategoryId=${item.id}`}>
+        <Title>{cate.cateName}</Title>
+        <Link to = {`${cate.cateSlug}`}>
           <Button>SHOP NOW</Button>
         </Link>
       </Info>

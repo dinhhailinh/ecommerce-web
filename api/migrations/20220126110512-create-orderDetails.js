@@ -38,6 +38,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      color: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       sum: {
         allowNull: false,
         type: Sequelize.DECIMAL(10, 2)
