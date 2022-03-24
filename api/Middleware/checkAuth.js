@@ -1,6 +1,6 @@
 const jwt = require ('jsonwebtoken')
 
-const requireLogin = async (req, res, next) => {
+const requireLogin = async(req, res, next) => {
     const authHeader = req.headers['authorization']; //Bearer TOKEN
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) return res.status(401).json({error:"Null token"});
@@ -15,7 +15,7 @@ const requireLogin = async (req, res, next) => {
     });
 }
 
-const checkAdmin = async (req, res, next) => {
+const checkAdmin = async(req, res, next) => {
     if (req.user.isAdmin !== true) {
         return res.status(401).json({
             message: "Admin access denied"
@@ -23,4 +23,5 @@ const checkAdmin = async (req, res, next) => {
     }
     next();
 }
-module.exports = {requireLogin, checkAdmin}
+
+module.exports = { requireLogin, checkAdmin }

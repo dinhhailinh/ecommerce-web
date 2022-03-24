@@ -2,7 +2,7 @@ const slugify = require('slugify')
 const { Categories } = require('../models')
 const Category = Categories
 
-const createCategory = async(req, res) => {
+const createCategory = async (req, res) => {
     const { category, image } = req.body
     try {
         const check = await Category.findAll({

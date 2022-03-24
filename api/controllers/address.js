@@ -1,6 +1,6 @@
 const { Addresses } = require('../models')
 
-const createAddress = async(req, res) => {
+const createAddress = async (req, res) => {
     const {address, phone} = req.body
     try {
         

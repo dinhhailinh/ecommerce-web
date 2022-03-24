@@ -6,4 +6,4 @@ const jwtToken = (id, email, isAdmin) => {
     return  accessToken
 }
 
-module.exports = {jwtToken}
+module.exports = { jwtToken }

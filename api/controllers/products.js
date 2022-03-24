@@ -5,7 +5,7 @@ const Product = Products
 
 const Op = Sequelize.Op
 
-const createProduct = async(req, res) => {
+const createProduct = async (req, res) => {
     const {title, image, desc, price, quantity, size, gender, color, category} = req.body
     try {
         const check = await Product.findAll({where:{
@@ -34,7 +34,7 @@ const createProduct = async(req, res) => {
     }
 }
 
-/*const getAllProduct = async(req, res) => {
+/*const getAllProduct = async (req, res) => {
     const limit = Number(req.query.limit) || 20
     const pageNum = Number(req.query.pageNum) || 1
     const page = limit * (pageNum - 1)
@@ -60,7 +60,7 @@ const createProduct = async(req, res) => {
     }
 }*/
 
-const getProducts = async(req, res) => {
+const getProducts = async (req, res) => {
     const limit = Number(req.query.limit) || 20
     const pageNum = Number(req.query.pageNum) || 1
     const page = limit * (pageNum - 1)
@@ -123,7 +123,7 @@ const getProducts = async(req, res) => {
     }
 }
 
-const getOneProduct = async(req, res) => {
+const getOneProduct = async (req, res) => {
     try {
         const getOneProduct = await Product.findOne({
             where : {id: req.params.id},
@@ -136,7 +136,7 @@ const getOneProduct = async(req, res) => {
     }
 }
 
-const updateProduct = async(req, res) => {
+const updateProduct = async (req, res) => {
     const input = req.body
     try {
         const find = await Product.findOne({
@@ -150,7 +150,7 @@ const updateProduct = async(req, res) => {
     }
 }
 
-const deleteProduct = async(req, res) => {
+const deleteProduct = async (req, res) => {
     try {
         const find = await Product.findOne({
             where: {id: req.params.id}

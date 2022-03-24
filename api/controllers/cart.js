@@ -1,6 +1,6 @@
 const { Carts, Products } = require('../models')
 
-const createCart = async(req, res) => {
+const createCart = async (req, res) => {
     const {productId, color, size} = req.body
     try {
         const checkItem = await Carts.findOne({where: 
@@ -36,7 +36,7 @@ const createCart = async(req, res) => {
     }
 }
 
-const getUserCart = async(req, res) =>{
+const getUserCart = async (req, res) =>{
     try {
         const myCart = await Carts.findAndCountAll({where: {
             UserId: req.user.id
@@ -50,7 +50,7 @@ const getUserCart = async(req, res) =>{
     }
 }
 
-const updateCartItem = async(req, res) =>{
+const updateCartItem = async (req, res) =>{
     const quantity = req.body
     
     try {

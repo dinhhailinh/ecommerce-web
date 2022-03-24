@@ -7,7 +7,7 @@ const { jwtToken } = require ('../Middleware/generateToken')
 const User = Users
 
 const cryptoJs = CryptoJs
-const createUser = async(req, res) => {
+const createUser = async (req, res) => {
     const {firstName, lastName, email, password} = req.body
     try {
         const checkUser = await User.findOne({
@@ -43,7 +43,7 @@ const createUser = async(req, res) => {
     }
 }
 
-const loginUser = async(req, res) => {
+const loginUser = async (req, res) => {
     const {email, password} = req.body
     try {
         const user = await User.findOne({
@@ -75,14 +75,14 @@ const loginUser = async(req, res) => {
     }
 }
 
-const logout = async(req, res) => {
+const logout = async (req, res) => {
     await res.clearCookie("accessToken");
     res.status(200).json({
     message: "Logout successfully...!",
   })
 }
 
-const getAllUser = async(req, res) => {
+const getAllUser = async (req, res) => {
     const limit = Number(req.query.limit) || 20
     const pageNum = Number(req.query.pageNum) || 1
     const page = limit * (pageNum - 1)
@@ -97,7 +97,7 @@ const getAllUser = async(req, res) => {
         res.status(400).json(error)
     }
 }
-const getUser = async(req, res) => {
+const getUser = async (req, res) => {
     try {
         const user = await User.findOne({where: {
             id: req.params.userId,
@@ -113,7 +113,7 @@ const getUser = async(req, res) => {
     }
 }
 
-const updateProfile = async(req, res) => {
+const updateProfile = async (req, res) => {
     const input = req.body
     
     try {
@@ -131,7 +131,7 @@ const updateProfile = async(req, res) => {
     
 }
 
-const changePassword = async(req, res) => {
+const changePassword = async (req, res) => {
     const {oldPassword, newPassword} = req.body
 
     try {
@@ -162,7 +162,7 @@ const changePassword = async(req, res) => {
     }
 }
 
-const deleteUser = async(req, res) => {
+const deleteUser = async (req, res) => {
     try {
         const destroy = await User.findOne({
             where: {id: req.user.id}

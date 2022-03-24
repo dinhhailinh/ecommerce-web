@@ -1,6 +1,6 @@
 const { Payments } = require('../models')
 
-const createPaymentType = async(req, res) => {
+const createPaymentType = async (req, res) => {
     const {paymentType} = req.body
     try {
         const check = Payments.findOne({
@@ -23,7 +23,7 @@ const createPaymentType = async(req, res) => {
     }
 }
 
-const getPaymentType = async(req, res) => {
+const getPaymentType = async (req, res) => {
     try {
         const getPaymentType = await Payments.findAll({
             attributes: ['id','paymentType']
