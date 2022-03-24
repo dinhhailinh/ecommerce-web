@@ -1,6 +1,6 @@
 const { Addresses } = require('../models')
 
-const createAddress = async (req, res) =>{
+const createAddress = async(req, res) => {
     const {address, phone} = req.body
     try {
         
@@ -30,4 +30,5 @@ const getUserAddress = async (req, res) =>{
         console.log(error);
     }
 }
-module.exports = {createAddress, getUserAddress}
+
+module.exports = { createAddress, getUserAddress }

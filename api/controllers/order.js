@@ -36,7 +36,7 @@ const createOrderItem = async (req, res) => {
             },
             attributes: ['id','quantity']
         })
-        if(checkItem){
+        if (checkItem) {
             const update = await checkItem.update({
                 quantity: checkItem.quantity + quantity,
                 sum: findProduct.price * (checkItem.quantity + quantity)
@@ -44,7 +44,7 @@ const createOrderItem = async (req, res) => {
             await update.save()
             res.status(200).json(update) 
         }
-        else{
+        else {
             const detail = await OrderDetails.create({
                 UserId: req.user.id,
                 OrdersId: OrdersId,
@@ -75,7 +75,7 @@ const createOrderItem = async (req, res) => {
         await updateOrder.save()
         const soldNum = findProduct.sold + checkItem.quantity
         console.log(soldNum);
-        if(updateOrder){
+        if (updateOrder) {
             const updateProduct = await findProduct.update({
                 sold: soldNum,
                 quantity: findProduct.quantity - quantity
@@ -108,7 +108,7 @@ const updateOrderToDelivery = async (req, res) => {
             where: {id: req.params.id},
             include: { model: Payments, as: 'payment', attributes: ['paymentType'] }
         })
-        if(findOrder.payment.paymentType === 'PayPal'){
+        if (findOrder.payment.paymentType === 'PayPal') {
             const updateOrder = await findOrder.update({
                 status: 'Success',
                 shippingAt: new Date()

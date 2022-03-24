@@ -1,4 +1,4 @@
-const upload = async (req, res) => {
+const upload = async(req, res) => {
     try {
         res.send(`/${req.file.path}`)
     } catch (error) {
@@ -6,4 +6,4 @@ const upload = async (req, res) => {
     }
 }
 
-module.exports = {upload}
+module.exports = { upload }

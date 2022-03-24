@@ -1,9 +1,8 @@
 const { Carts, Products } = require('../models')
 
-const createCart = async (req, res) =>{
+const createCart = async(req, res) => {
     const {productId, color, size} = req.body
     try {
-        
         const checkItem = await Carts.findOne({where: 
             {
                 UserId: req.user.id,
@@ -13,7 +12,7 @@ const createCart = async (req, res) =>{
             },
             attributes: ['quantity']
         })
-        if(checkItem){
+        if (checkItem) {
             const quantity = checkItem.quantity + 1
             const newCart = await Carts.update({
                 UserId: req.user.id,
@@ -37,7 +36,7 @@ const createCart = async (req, res) =>{
     }
 }
 
-const getUserCart = async (req, res) =>{
+const getUserCart = async(req, res) =>{
     try {
         const myCart = await Carts.findAndCountAll({where: {
             UserId: req.user.id
@@ -50,7 +49,8 @@ const getUserCart = async (req, res) =>{
         console.log(error);
     }
 }
-const updateCartItem = async (req, res) =>{
+
+const updateCartItem = async(req, res) =>{
     const quantity = req.body
     
     try {
@@ -66,4 +66,5 @@ const updateCartItem = async (req, res) =>{
         console.log(error);
     }
 }
-module.exports = {createCart, getUserCart, updateCartItem}
+
+module.exports = { createCart, getUserCart, updateCartItem }

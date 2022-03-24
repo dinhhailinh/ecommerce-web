@@ -1,6 +1,6 @@
 const { Payments } = require('../models')
 
-const createPaymentType = async (req, res) =>{
+const createPaymentType = async(req, res) => {
     const {paymentType} = req.body
     try {
         const check = Payments.findOne({
@@ -23,7 +23,7 @@ const createPaymentType = async (req, res) =>{
     }
 }
 
-const getPaymentType = async (req, res) =>{
+const getPaymentType = async(req, res) => {
     try {
         const getPaymentType = await Payments.findAll({
             attributes: ['id','paymentType']
@@ -35,4 +35,5 @@ const getPaymentType = async (req, res) =>{
         res.status(400).json(error)
     }
 }
-module.exports = {createPaymentType, getPaymentType}
+
+module.exports = { createPaymentType, getPaymentType }

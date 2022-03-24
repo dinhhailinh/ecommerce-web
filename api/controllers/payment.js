@@ -1,9 +1,9 @@
 const paypal = require('paypal-rest-sdk')
 const paypalConfig = require('../config/paypal')
-const {Orders, OrderDetails, Products} = require('../models')
+const { Orders, OrderDetails, Products } = require('../models')
 
 paypal.configure(paypalConfig)
-const payment = async (req, res) => {
+const payment = async(req, res) => {
     // const sum = req.body.sum
     // create_payment = {
     //     "intent": "sale",
@@ -36,9 +36,10 @@ const payment = async (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID)
     
 }
-const paySuccess = async (req, res) => {
-    const payerId = req.query.PayerID;
-    const paymentId = req.query.paymentId;
+const paySuccess = async(req, res) => {
+    const payerId = req.query.PayerID
+    const paymentId = req.query.paymentId
+
     try {
         const sum = await OrderDetails.findAll({
             where: {OrderId: "50b6385d-0cb6-46a5-bbc7-be27fe815c2a"},
@@ -71,4 +72,5 @@ const paySuccess = async (req, res) => {
             
     }
 }
-module.exports = {payment, paySuccess}
+
+module.exports = { payment, paySuccess }

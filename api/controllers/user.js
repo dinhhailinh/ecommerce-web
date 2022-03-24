@@ -7,7 +7,7 @@ const { jwtToken } = require ('../Middleware/generateToken')
 const User = Users
 
 const cryptoJs = CryptoJs
-const createUser = async (req, res) => {
+const createUser = async(req, res) => {
     const {firstName, lastName, email, password} = req.body
     try {
         const checkUser = await User.findOne({
@@ -16,10 +16,9 @@ const createUser = async (req, res) => {
                 }
             })
             
-        if(checkUser) {
+        if (checkUser) {
             res.status(400).json("account has been existed, please try again")
-        }
-        else {
+        } else {
             const newUser = await User.create({
                 firstName,
                 lastName,
@@ -44,7 +43,7 @@ const createUser = async (req, res) => {
     }
 }
 
-const loginUser = async (req, res) => {
+const loginUser = async(req, res) => {
     const {email, password} = req.body
     try {
         const user = await User.findOne({
@@ -76,17 +75,18 @@ const loginUser = async (req, res) => {
     }
 }
 
-const logout = async (req, res) => {
+const logout = async(req, res) => {
     await res.clearCookie("accessToken");
     res.status(200).json({
     message: "Logout successfully...!",
   })
 }
 
-const getAllUser = async (req, res) => {
+const getAllUser = async(req, res) => {
     const limit = Number(req.query.limit) || 20
     const pageNum = Number(req.query.pageNum) || 1
     const page = limit * (pageNum - 1)
+
     try {
         const users = await User.findAll({
             limit: limit,
@@ -97,7 +97,7 @@ const getAllUser = async (req, res) => {
         res.status(400).json(error)
     }
 }
-const getUser = async (req, res) => {
+const getUser = async(req, res) => {
     try {
         const user = await User.findOne({where: {
             id: req.params.userId,
@@ -113,7 +113,7 @@ const getUser = async (req, res) => {
     }
 }
 
-const updateProfile = async (req, res) => {
+const updateProfile = async(req, res) => {
     const input = req.body
     
     try {
@@ -131,8 +131,9 @@ const updateProfile = async (req, res) => {
     
 }
 
-const changePassword = async (req, res) => {
+const changePassword = async(req, res) => {
     const {oldPassword, newPassword} = req.body
+
     try {
         const findUser = await User.findOne(
             {where: {
@@ -146,13 +147,13 @@ const changePassword = async (req, res) => {
         const originalPassword = hashedPassword.toString(cryptoJs.enc.Utf8)
         if (originalPassword != oldPassword) {
             res.status(401).json("Wrong Password")
-        }
-        else {
+        } else {
             const updateUser = await findUser.update({
                 password: cryptoJs.AES.encrypt(
                     newPassword,
                     process.env.PASS_SECRET
                 ).toString()})
+
             await updateUser.save()
             res.status(201).json('password has been changed!')
         }
@@ -161,7 +162,7 @@ const changePassword = async (req, res) => {
     }
 }
 
-const deleteUser = async (req, res) => {
+const deleteUser = async(req, res) => {
     try {
         const destroy = await User.findOne({
             where: {id: req.user.id}
@@ -173,4 +174,4 @@ const deleteUser = async (req, res) => {
     }
 }
 
-module.exports = {createUser, loginUser, logout, getAllUser, getUser, updateProfile, changePassword, deleteUser}
+module.exports = { createUser, loginUser, logout, getAllUser, getUser, updateProfile, changePassword, deleteUser }

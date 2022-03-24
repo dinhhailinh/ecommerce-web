@@ -2,13 +2,14 @@ const slugify = require('slugify')
 const { Categories } = require('../models')
 const Category = Categories
 
-const createCategory = async (req, res) =>{
-    const {category, image} = req.body
+const createCategory = async(req, res) => {
+    const { category, image } = req.body
     try {
-        const check = await Category.findAll({where:{
-            cateName: category
+        const check = await Category.findAll({
+            where:{
+                cateName: category
         }})
-        if(check[0]) {
+        if (check[0]) {
             
             res.status(400).json("this category has been existed")
         } 
@@ -73,4 +74,5 @@ const updateCategory = async (req, res) => {
         console.log(error);
     }
 }
-module.exports = {createCategory, getAllCategory, getOneCategory, deleteCategory, updateCategory}
+
+module.exports = { createCategory, getAllCategory, getOneCategory, deleteCategory, updateCategory }
